@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Bases</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .model-section {
+            margin-bottom: 2rem;
+        }
+        .model-card {
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            height: 100%;
+        }
+        .basico .card-header {
+            background-color: #e6f7ff;
+        }
+        .intermedio .card-header {
+            background-color: #fff7e6;
+        }
+        .avanzado .card-header {
+            background-color: #f0ffe6;
+        }
+        .tag-label {
+            font-weight: bold;
+            padding: 0.3rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+        .tag-basico {
+            background-color: #b3e0ff;
+            color: #004080;
+        }
+        .tag-intermedio {
+            background-color: #ffd699;
+            color: #804000;
+        }
+        .tag-avanzado {
+            background-color: #99ff99;
+            color: #006600;
+        }
+        .size-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        .size-item:last-child {
+            border-bottom: none;
+        }
+        .counter-container {
+            display: flex;
+            align-items: center;
+        }
+        .counter-value {
+            margin: 0 0.5rem;
+            min-width: 30px;
+            text-align: center;
+        }
+        .size-name {
+            font-weight: 500;
+        }
+        h2 {
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .model-image {
+            height: 150px;
+            object-fit: contain;
+            background-color: #f8f9fa;
+            padding: 0.5rem;
+        }
+        .card-body {
+            padding-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <h1 class="text-center mb-4">Contador de Bases</h1>
+        
+        <div class="row mb-4">
+            <div class="col-md-6 mx-auto">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="schoolName" placeholder="Nombre de la escuela">
+                    <label for="schoolName">Nombre de la escuela</label>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sección BÁSICO -->
+        <div class="model-section basico">
+            <h2>BÁSICO <span class="tag-label tag-basico">BASICO</span></h2>
+            <div class="row" id="basico-container">
+                <!-- Las cards se generarán con JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Sección INTERMEDIO -->
+        <div class="model-section intermedio">
+            <h2>INTERMEDIO <span class="tag-label tag-intermedio">INTERMEDIO</span></h2>
+            <div class="row" id="intermedio-container">
+                <!-- Las cards se generarán con JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Sección AVANZADO -->
+        <div class="model-section avanzado">
+            <h2>AVANZADO <span class="tag-label tag-avanzado">AVANZADO</span></h2>
+            <div class="row" id="avanzado-container">
+                <!-- Las cards se generarán con JavaScript -->
+            </div>
+        </div>
+        
+        <!-- Tabla de resultados -->
+        <div class="mt-5">
+            <h2 class="mb-3">Resumen de Pedido</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" id="resultsTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Modelo</th>
+                            <th>Tamaño</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se generarán con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Botones de acción -->
+        <div class="d-flex justify-content-center gap-3 my-4">
+            <button class="btn btn-primary" id="copyBtn">Copiar Resumen</button>
+            <button class="btn btn-success" id="exportBtn">Exportar a Excel</button>
+            <button class="btn btn-secondary" id="resetBtn">Reiniciar Contadores</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
+    <script>
+        // Datos de los modelos con imágenes de ejemplo (reemplaza con tus propias imágenes)
+        const models = [
+            { name: "ACANALADA PIRAMIDAL NEGRO", tag: "BASICO", image: "https://m.media-amazon.com/images/I/81wUT44jMKL.jpg" },
+            { name: "ACANALADA PIRAMIDAL VINO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+PIRAMIDAL+VINO" },
+            { name: "ACANALADA PIRAMIDAL CAFÉ", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+PIRAMIDAL+CAFE" },
+            { name: "ACANALADA ROLEX NEGRO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+ROLEX+NEGRO" },
+            { name: "ACANALADA ROLEX VINO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+ROLEX+VINO" },
+            { name: "ACANALADA ROLEX CAFÉ", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+ROLEX+CAFE" },
+            { name: "LIBRO NEGRO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=LIBRO+NEGRO" },
+            { name: "LIBRO VINO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=LIBRO+VINO" },
+            { name: "LIEGO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=LIEGO" },
+            { name: "MONACO VINO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MONACO+VINO" },
+            { name: "MONACO NEGRO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MONACO+NEGRO" },
+            { name: "CORONA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=CORONA" },
+            { name: "MERCURIO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MERCURIO" },
+            { name: "ESTRELLA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ESTRELLA" },
+            { name: "ATLANTA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ATLANTA" },
+            { name: "MARIPOSA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MARIPOSA" },
+            { name: "PANORAMIC", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=PANORAMIC" },
+            { name: "AMERICANA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=AMERICANA" },
+            { name: "ROMANA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ROMANA" },
+            { name: "ATENEA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ATENEA" },
+            { name: "TUB D LUX", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=TUB+D+LUX" },
+            { name: "ANUBIS CHOCOLATE", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=ANUBIS+CHOCOLATE" },
+            { name: "ANUBIS MIEL", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=ANUBIS+MIEL" },
+            { name: "ESLOVENIA", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=ESLOVENIA" },
+            { name: "BERLIN", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=BERLIN" },
+            { name: "FLORENCIA NEGRO", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=FLORENCIA+NEGRO" },
+            { name: "FLORENCIA VINO", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=FLORENCIA+VINO" },
+            { name: "INGLESA", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=INGLESA" }
+        ];
+
+        // Tamaños disponibles
+        const sizes = ["Panoramic", "Carta", "Ampliación", "Doble carta"];
+
+        // Objeto para almacenar los contadores
+        let counters = {};
+
+        // Inicializar contadores
+        function initializeCounters() {
+            models.forEach(model => {
+                counters[model.name] = {};
+                sizes.forEach(size => {
+                    counters[model.name][size] = 0;
+                });
+            });
+        }
+
+        // Generar cards para cada modelo con sus tamaños
+        function generateModelCards() {
+            models.forEach(model => {
+                const containerId = `${model.tag.toLowerCase()}-container`;
+                const container = document.getElementById(containerId);
+                
+                const col = document.createElement('div');
+                col.className = 'col-md-6 col-lg-4 mb-4';
+                
+                const card = document.createElement('div');
+                card.className = 'card model-card h-100';
+                
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'card-header fw-bold';
+                cardHeader.textContent = model.name;
+                
+                // Añadir imagen
+                const img = document.createElement('img');
+                img.className = 'model-image w-100';
+                img.src = model.image;
+                img.alt = model.name;
+                
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+                
+                sizes.forEach(size => {
+                    const sizeItem = document.createElement('div');
+                    sizeItem.className = 'size-item';
+                    
+                    const sizeName = document.createElement('span');
+                    sizeName.className = 'size-name';
+                    sizeName.textContent = size;
+                    
+                    const counterDiv = document.createElement('div');
+                    counterDiv.className = 'counter-container';
+                    
+                    const minusBtn = document.createElement('button');
+                    minusBtn.className = 'btn btn-sm btn-outline-danger';
+                    minusBtn.textContent = '-';
+                    minusBtn.onclick = () => updateCounter(model.name, size, -1);
+                    
+                    const counterSpan = document.createElement('span');
+                    counterSpan.className = 'counter-value';
+                    counterSpan.id = `counter-${model.name.replace(/\s+/g, '-')}-${size}`;
+                    counterSpan.textContent = '0';
+                    
+                    const plusBtn = document.createElement('button');
+                    plusBtn.className = 'btn btn-sm btn-outline-success';
+                    plusBtn.textContent = '+';
+                    plusBtn.onclick = () => updateCounter(model.name, size, 1);
+                    
+                    counterDiv.appendChild(minusBtn);
+                    counterDiv.appendChild(counterSpan);
+                    counterDiv.appendChild(plusBtn);
+                    
+                    sizeItem.appendChild(sizeName);
+                    sizeItem.appendChild(counterDiv);
+                    cardBody.appendChild(sizeItem);
+                });
+                
+                card.appendChild(cardHeader);
+                card.appendChild(img);
+                card.appendChild(cardBody);
+                col.appendChild(card);
+                container.appendChild(col);
+            });
+        }
+
+        // Actualizar contador
+        function updateCounter(model, size, change) {
+            counters[model][size] += change;
+            if (counters[model][size] < 0) counters[model][size] = 0;
+            
+            const counterId = `counter-${model.replace(/\s+/g, '-')}-${size}`;
+            document.getElementById(counterId).textContent = counters[model][size];
+            
+            updateResultsTable();
+        }
+
+        // Actualizar tabla de resultados
+        function updateResultsTable() {
+            const tbody = document.querySelector('#resultsTable tbody');
+            tbody.innerHTML = '';
+            
+            let hasItems = false;
+            
+            models.forEach(model => {
+                sizes.forEach(size => {
+                    if (counters[model.name][size] > 0) {
+                        hasItems = true;
+                        const row = document.createElement('tr');
+                        
+                        const modelCell = document.createElement('td');
+                        modelCell.textContent = model.name;
+                        
+                        const sizeCell = document.createElement('td');
+                        sizeCell.textContent = size;
+                        
+                        const qtyCell = document.createElement('td');
+                        qtyCell.textContent = counters[model.name][size];
+                        
+                        row.appendChild(modelCell);
+                        row.appendChild(sizeCell);
+                        row.appendChild(qtyCell);
+                        tbody.appendChild(row);
+                    }
+                });
+            });
+            
+            if (!hasItems) {
+                const row = document.createElement('tr');
+                const cell = document.createElement('td');
+                cell.setAttribute('colspan', '3');
+                cell.className = 'text-center text-muted';
+                cell.textContent = 'No hay elementos seleccionados';
+                row.appendChild(cell);
+                tbody.appendChild(row);
+            }
+        }
+
+        // Copiar resumen al portapapeles
+        function copyToClipboard() {
+            const schoolName = document.getElementById('schoolName').value;
+            let summaryText = schoolName ? `Escuela: ${schoolName}\n\n` : '';
+            
+            let hasItems = false;
+            
+            models.forEach(model => {
+                sizes.forEach(size => {
+                    if (counters[model.name][size] > 0) {
+                        hasItems = true;
+                        summaryText += `${model.name} - ${size}: ${counters[model.name][size]}\n`;
+                    }
+                });
+            });
+            
+            if (!hasItems) {
+                summaryText += 'No hay elementos seleccionados';
+            }
+            
+            navigator.clipboard.writeText(summaryText).then(() => {
+                alert('Resumen copiado al portapapeles');
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+                // Fallback para navegadores antiguos
+                const textarea = document.createElement('textarea');
+                textarea.value = summaryText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                alert('Resumen copiado al portapapeles');
+            });
+        }
+
+        // Exportar a Excel
+        function exportToExcel() {
+            const schoolName = document.getElementById('schoolName').value;
+            const data = [];
+            
+            // Encabezados
+            data.push(['Escuela:', schoolName || '']);
+            data.push([]);
+            data.push(['Modelo', 'Tamaño', 'Cantidad']);
+            
+            // Datos
+            models.forEach(model => {
+                sizes.forEach(size => {
+                    if (counters[model.name][size] > 0) {
+                        data.push([model.name, size, counters[model.name][size]]);
+                    }
+                });
+            });
+            
+            // Crear libro de Excel
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            XLSX.utils.book_append_sheet(wb, ws, "Pedido de Bases");
+            
+            // Descargar archivo
+            const fileName = `Pedido_Bases_${schoolName || new Date().toISOString().slice(0, 10)}.xlsx`;
+            XLSX.writeFile(wb, fileName);
+        }
+
+        // Reiniciar contadores
+        function resetCounters() {
+            if (confirm('¿Estás seguro de que quieres reiniciar todos los contadores?')) {
+                initializeCounters();
+                
+                models.forEach(model => {
+                    sizes.forEach(size => {
+                        const counterId = `counter-${model.name.replace(/\s+/g, '-')}-${size}`;
+                        const counterElement = document.getElementById(counterId);
+                        if (counterElement) {
+                            counterElement.textContent = '0';
+                        }
+                    });
+                });
+                
+                updateResultsTable();
+            }
+        }
+
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCounters();
+            generateModelCards();
+            updateResultsTable();
+            
+            // Event listeners para los botones de acción
+            document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+            document.getElementById('exportBtn').addEventListener('click', exportToExcel);
+            document.getElementById('resetBtn').addEventListener('click', resetCounters);
+        });
+    </script>
+</body>
+</html>
