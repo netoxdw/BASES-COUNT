@@ -13,7 +13,6 @@
             margin-bottom: 1.5rem;
             border-radius: 0.5rem;
             overflow: hidden;
-            height: 100%;
         }
         .basico .card-header {
             background-color: #e6f7ff;
@@ -69,15 +68,6 @@
             border-bottom: 2px solid #dee2e6;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
-        }
-        .model-image {
-            height: 150px;
-            object-fit: contain;
-            background-color: #f8f9fa;
-            padding: 0.5rem;
-        }
-        .card-body {
-            padding-top: 0.5rem;
         }
     </style>
 </head>
@@ -148,36 +138,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.19.3/package/dist/xlsx.full.min.js"></script>
     <script>
-        // Datos de los modelos con imágenes de ejemplo (reemplaza con tus propias imágenes)
+        // Datos de los modelos
         const models = [
-            { name: "ACANALADA PIRAMIDAL NEGRO", tag: "BASICO", image: "https://m.media-amazon.com/images/I/81wUT44jMKL.jpg" },
-            { name: "ACANALADA PIRAMIDAL VINO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+PIRAMIDAL+VINO" },
-            { name: "ACANALADA PIRAMIDAL CAFÉ", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+PIRAMIDAL+CAFE" },
-            { name: "ACANALADA ROLEX NEGRO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+ROLEX+NEGRO" },
-            { name: "ACANALADA ROLEX VINO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+ROLEX+VINO" },
-            { name: "ACANALADA ROLEX CAFÉ", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=ACANALADA+ROLEX+CAFE" },
-            { name: "LIBRO NEGRO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=LIBRO+NEGRO" },
-            { name: "LIBRO VINO", tag: "BASICO", image: "https://via.placeholder.com/300x200?text=LIBRO+VINO" },
-            { name: "LIEGO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=LIEGO" },
-            { name: "MONACO VINO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MONACO+VINO" },
-            { name: "MONACO NEGRO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MONACO+NEGRO" },
-            { name: "CORONA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=CORONA" },
-            { name: "MERCURIO", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MERCURIO" },
-            { name: "ESTRELLA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ESTRELLA" },
-            { name: "ATLANTA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ATLANTA" },
-            { name: "MARIPOSA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=MARIPOSA" },
-            { name: "PANORAMIC", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=PANORAMIC" },
-            { name: "AMERICANA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=AMERICANA" },
-            { name: "ROMANA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ROMANA" },
-            { name: "ATENEA", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=ATENEA" },
-            { name: "TUB D LUX", tag: "INTERMEDIO", image: "https://via.placeholder.com/300x200?text=TUB+D+LUX" },
-            { name: "ANUBIS CHOCOLATE", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=ANUBIS+CHOCOLATE" },
-            { name: "ANUBIS MIEL", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=ANUBIS+MIEL" },
-            { name: "ESLOVENIA", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=ESLOVENIA" },
-            { name: "BERLIN", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=BERLIN" },
-            { name: "FLORENCIA NEGRO", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=FLORENCIA+NEGRO" },
-            { name: "FLORENCIA VINO", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=FLORENCIA+VINO" },
-            { name: "INGLESA", tag: "AVANZADO", image: "https://via.placeholder.com/300x200?text=INGLESA" }
+            { name: "ACANALADA PIRAMIDAL NEGRO", tag: "BASICO" },
+            { name: "ACANALADA PIRAMIDAL VINO", tag: "BASICO" },
+            { name: "ACANALADA PIRAMIDAL CAFÉ", tag: "BASICO" },
+            { name: "ACANALADA ROLEX NEGRO", tag: "BASICO" },
+            { name: "ACANALADA ROLEX VINO", tag: "BASICO" },
+            { name: "ACANALADA ROLEX CAFÉ", tag: "BASICO" },
+            { name: "LIBRO NEGRO", tag: "BASICO" },
+            { name: "LIBRO VINO", tag: "BASICO" },
+            { name: "LIEGO", tag: "INTERMEDIO" },
+            { name: "MONACO VINO", tag: "INTERMEDIO" },
+            { name: "MONACO NEGRO", tag: "INTERMEDIO" },
+            { name: "CORONA", tag: "INTERMEDIO" },
+            { name: "MERCURIO", tag: "INTERMEDIO" },
+            { name: "ESTRELLA", tag: "INTERMEDIO" },
+            { name: "ATLANTA", tag: "INTERMEDIO" },
+            { name: "MARIPOSA", tag: "INTERMEDIO" },
+            { name: "PANORAMIC", tag: "INTERMEDIO" },
+            { name: "AMERICANA", tag: "INTERMEDIO" },
+            { name: "ROMANA", tag: "INTERMEDIO" },
+            { name: "ATENEA", tag: "INTERMEDIO" },
+            { name: "TUB D LUX", tag: "INTERMEDIO" },
+            { name: "ANUBIS CHOCOLATE", tag: "AVANZADO" },
+            { name: "ANUBIS MIEL", tag: "AVANZADO" },
+            { name: "ESLOVENIA", tag: "AVANZADO" },
+            { name: "BERLIN", tag: "AVANZADO" },
+            { name: "FLORENCIA NEGRO", tag: "AVANZADO" },
+            { name: "FLORENCIA VINO", tag: "AVANZADO" },
+            { name: "INGLESA", tag: "AVANZADO" }
         ];
 
         // Tamaños disponibles
@@ -203,20 +193,14 @@
                 const container = document.getElementById(containerId);
                 
                 const col = document.createElement('div');
-                col.className = 'col-md-6 col-lg-4 mb-4';
+                col.className = 'col-md-6 col-lg-4';
                 
                 const card = document.createElement('div');
-                card.className = 'card model-card h-100';
+                card.className = 'card model-card';
                 
                 const cardHeader = document.createElement('div');
-                cardHeader.className = 'card-header fw-bold';
+                cardHeader.className = 'card-header';
                 cardHeader.textContent = model.name;
-                
-                // Añadir imagen
-                const img = document.createElement('img');
-                img.className = 'model-image w-100';
-                img.src = model.image;
-                img.alt = model.name;
                 
                 const cardBody = document.createElement('div');
                 cardBody.className = 'card-body';
@@ -257,7 +241,6 @@
                 });
                 
                 card.appendChild(cardHeader);
-                card.appendChild(img);
                 card.appendChild(cardBody);
                 col.appendChild(card);
                 container.appendChild(col);
