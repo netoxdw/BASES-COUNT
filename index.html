@@ -10,7 +10,7 @@
             margin-bottom: 2rem;
         }
         .model-card {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             border-radius: 0.5rem;
             overflow: hidden;
         }
@@ -42,32 +42,68 @@
             background-color: #99ff99;
             color: #006600;
         }
-        .size-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem 0;
+        .model-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .model-table th {
+            text-align: center;
+            padding: 0.75rem 0.5rem;
+            background-color: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+        }
+        .model-table td {
+            padding: 0.75rem 0.5rem;
+            text-align: center;
             border-bottom: 1px solid #eee;
         }
-        .size-item:last-child {
-            border-bottom: none;
+        .model-name {
+            font-weight: 500;
+            text-align: left;
+            white-space: nowrap;
+            padding-left: 1rem !important;
         }
         .counter-container {
             display: flex;
             align-items: center;
+            justify-content: center;
         }
         .counter-value {
             margin: 0 0.5rem;
             min-width: 30px;
             text-align: center;
         }
-        .size-name {
-            font-weight: 500;
-        }
         h2 {
             border-bottom: 2px solid #dee2e6;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .basico tr:nth-child(4n+1) {
+            background-color: #e6f7ff;
+        }
+        .basico tr:nth-child(4n+3) {
+            background-color: #d0ebff;
+        }
+        .intermedio tr:nth-child(4n+1) {
+            background-color: #fff7e6;
+        }
+        .intermedio tr:nth-child(4n+3) {
+            background-color: #ffefcc;
+        }
+        .avanzado tr:nth-child(4n+1) {
+            background-color: #f0ffe6;
+        }
+        .avanzado tr:nth-child(4n+3) {
+            background-color: #e0ffcc;
         }
     </style>
 </head>
@@ -87,24 +123,69 @@
         <!-- Sección BÁSICO -->
         <div class="model-section basico">
             <h2>BÁSICO <span class="tag-label tag-basico">BASICO</span></h2>
-            <div class="row" id="basico-container">
-                <!-- Las cards se generarán con JavaScript -->
+            <div class="card model-card">
+                <div class="card-body p-0">
+                    <table class="model-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Modelo</th>
+                                <th>Panoramic</th>
+                                <th>Carta</th>
+                                <th>Ampliación</th>
+                                <th>Doble carta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="basico-container">
+                            <!-- Las filas se generarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         
         <!-- Sección INTERMEDIO -->
         <div class="model-section intermedio">
             <h2>INTERMEDIO <span class="tag-label tag-intermedio">INTERMEDIO</span></h2>
-            <div class="row" id="intermedio-container">
-                <!-- Las cards se generarán con JavaScript -->
+            <div class="card model-card">
+                <div class="card-body p-0">
+                    <table class="model-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Modelo</th>
+                                <th>Panoramic</th>
+                                <th>Carta</th>
+                                <th>Ampliación</th>
+                                <th>Doble carta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="intermedio-container">
+                            <!-- Las filas se generarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         
         <!-- Sección AVANZADO -->
         <div class="model-section avanzado">
             <h2>AVANZADO <span class="tag-label tag-avanzado">AVANZADO</span></h2>
-            <div class="row" id="avanzado-container">
-                <!-- Las cards se generarán con JavaScript -->
+            <div class="card model-card">
+                <div class="card-body p-0">
+                    <table class="model-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Modelo</th>
+                                <th>Panoramic</th>
+                                <th>Carta</th>
+                                <th>Ampliación</th>
+                                <th>Doble carta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="avanzado-container">
+                            <!-- Las filas se generarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         
@@ -186,32 +267,23 @@
             });
         }
 
-        // Generar cards para cada modelo con sus tamaños
-        function generateModelCards() {
+        // Generar filas de modelos en formato tabular
+        function generateModelRows() {
             models.forEach(model => {
                 const containerId = `${model.tag.toLowerCase()}-container`;
                 const container = document.getElementById(containerId);
                 
-                const col = document.createElement('div');
-                col.className = 'col-md-6 col-lg-4';
+                const row = document.createElement('tr');
                 
-                const card = document.createElement('div');
-                card.className = 'card model-card';
+                // Celda de modelo
+                const modelCell = document.createElement('td');
+                modelCell.className = 'model-name';
+                modelCell.textContent = model.name;
+                row.appendChild(modelCell);
                 
-                const cardHeader = document.createElement('div');
-                cardHeader.className = 'card-header';
-                cardHeader.textContent = model.name;
-                
-                const cardBody = document.createElement('div');
-                cardBody.className = 'card-body';
-                
+                // Celdas para cada tamaño
                 sizes.forEach(size => {
-                    const sizeItem = document.createElement('div');
-                    sizeItem.className = 'size-item';
-                    
-                    const sizeName = document.createElement('span');
-                    sizeName.className = 'size-name';
-                    sizeName.textContent = size;
+                    const sizeCell = document.createElement('td');
                     
                     const counterDiv = document.createElement('div');
                     counterDiv.className = 'counter-container';
@@ -234,16 +306,11 @@
                     counterDiv.appendChild(minusBtn);
                     counterDiv.appendChild(counterSpan);
                     counterDiv.appendChild(plusBtn);
-                    
-                    sizeItem.appendChild(sizeName);
-                    sizeItem.appendChild(counterDiv);
-                    cardBody.appendChild(sizeItem);
+                    sizeCell.appendChild(counterDiv);
+                    row.appendChild(sizeCell);
                 });
                 
-                card.appendChild(cardHeader);
-                card.appendChild(cardBody);
-                col.appendChild(card);
-                container.appendChild(col);
+                container.appendChild(row);
             });
         }
 
@@ -385,7 +452,7 @@
         // Inicializar la aplicación
         document.addEventListener('DOMContentLoaded', () => {
             initializeCounters();
-            generateModelCards();
+            generateModelRows();
             updateResultsTable();
             
             // Event listeners para los botones de acción
