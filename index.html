@@ -78,15 +78,6 @@
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        tr:nth-child(odd) {
-            background-color: #ffffff;
-        }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
         .basico tr:nth-child(4n+1) {
             background-color: #e6f7ff;
         }
@@ -105,6 +96,9 @@
         .avanzado tr:nth-child(4n+3) {
             background-color: #e0ffcc;
         }
+        tr:hover {
+            background-color: #f1f1f1 !important;
+        }
     </style>
 </head>
 <body>
@@ -122,14 +116,14 @@
         
         <!-- Sección BÁSICO -->
         <div class="model-section basico">
-            <h2>ACANALADAS <span class="tag-label tag-basico">PAQUETES 1 Y 2</span></h2>
+            <h2>BÁSICO <span class="tag-label tag-basico">BASICO</span></h2>
             <div class="card model-card">
                 <div class="card-body p-0">
                     <table class="model-table">
                         <thead>
                             <tr>
                                 <th style="width: 25%">Modelo</th>
-                                <th>Panoramica</th>
+                                <th>Panoramic</th>
                                 <th>Carta</th>
                                 <th>Ampliación</th>
                                 <th>Doble carta</th>
@@ -145,14 +139,14 @@
         
         <!-- Sección INTERMEDIO -->
         <div class="model-section intermedio">
-            <h2>MOLDURAS <span class="tag-label tag-intermedio">PAQUETES 3 Y 4</span></h2>
+            <h2>INTERMEDIO <span class="tag-label tag-intermedio">INTERMEDIO</span></h2>
             <div class="card model-card">
                 <div class="card-body p-0">
                     <table class="model-table">
                         <thead>
                             <tr>
                                 <th style="width: 25%">Modelo</th>
-                                <th>Panoramica</th>
+                                <th>Panoramic</th>
                                 <th>Carta</th>
                                 <th>Ampliación</th>
                                 <th>Doble carta</th>
@@ -168,14 +162,14 @@
         
         <!-- Sección AVANZADO -->
         <div class="model-section avanzado">
-            <h2>MOLDURA CON CRISTAL <span class="tag-label tag-avanzado">PAQUETES 5 Y 6</span></h2>
+            <h2>AVANZADO <span class="tag-label tag-avanzado">AVANZADO</span></h2>
             <div class="card model-card">
                 <div class="card-body p-0">
                     <table class="model-table">
                         <thead>
                             <tr>
                                 <th style="width: 25%">Modelo</th>
-                                <th>Panoramica</th>
+                                <th>Panoramic</th>
                                 <th>Carta</th>
                                 <th>Ampliación</th>
                                 <th>Doble carta</th>
@@ -238,20 +232,20 @@
             { name: "ATLANTA VINO", tag: "INTERMEDIO" },
             { name: "ATLANTA NEGRO", tag: "INTERMEDIO" },
             { name: "MARIPOSA", tag: "INTERMEDIO" },
-            { name: "PANORAMIC", tag: "INTERMEDIO" },
+            { name: "ARENA", tag: "INTERMEDIO" },
+            { name: "TUB PANORAMIC", tag: "INTERMEDIO" },
             { name: "AMERICANA", tag: "INTERMEDIO" },
             { name: "ROMANA", tag: "INTERMEDIO" },
             { name: "ATENEA", tag: "INTERMEDIO" },
             { name: "TUB D LUX", tag: "INTERMEDIO" },
-            { name: "ARENA", tag: "INTERMEDIO" },
             { name: "ANUBIS CHOCOLATE", tag: "AVANZADO" },
             { name: "ANUBIS MIEL", tag: "AVANZADO" },
             { name: "ESLOVENIA", tag: "AVANZADO" },
             { name: "BERLIN", tag: "AVANZADO" },
             { name: "FLORENCIA NEGRO", tag: "AVANZADO" },
             { name: "FLORENCIA VINO", tag: "AVANZADO" },
-            { name: "INGLESA", tag: "AVANZADO" },
             { name: "MARIPOSA CRISTAL", tag: "AVANZADO" },
+            { name: "INGLESA", tag: "AVANZADO" }
         ];
 
         // Tamaños disponibles
@@ -259,6 +253,17 @@
 
         // Objeto para almacenar los contadores
         let counters = {};
+
+        // Ordenar modelos alfabéticamente por nombre
+        function sortModelsAlphabetically() {
+            models.sort((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            });
+        }
 
         // Inicializar contadores
         function initializeCounters() {
@@ -272,6 +277,8 @@
 
         // Generar filas de modelos en formato tabular
         function generateModelRows() {
+            sortModelsAlphabetically(); // Ordenar antes de generar las filas
+            
             models.forEach(model => {
                 const containerId = `${model.tag.toLowerCase()}-container`;
                 const container = document.getElementById(containerId);
@@ -335,7 +342,16 @@
             
             let hasItems = false;
             
-            models.forEach(model => {
+            // Ordenar alfabéticamente para la tabla de resultados
+            const sortedModels = [...models].sort((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            });
+            
+            sortedModels.forEach(model => {
                 sizes.forEach(size => {
                     if (counters[model.name][size] > 0) {
                         hasItems = true;
@@ -376,7 +392,16 @@
             
             let hasItems = false;
             
-            models.forEach(model => {
+            // Ordenar alfabéticamente para el resumen
+            const sortedModels = [...models].sort((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            });
+            
+            sortedModels.forEach(model => {
                 sizes.forEach(size => {
                     if (counters[model.name][size] > 0) {
                         hasItems = true;
@@ -414,8 +439,17 @@
             data.push([]);
             data.push(['Modelo', 'Tamaño', 'Cantidad']);
             
+            // Ordenar alfabéticamente para el Excel
+            const sortedModels = [...models].sort((a, b) => {
+                const nameA = a.name.toUpperCase();
+                const nameB = b.name.toUpperCase();
+                if (nameA < nameB) return -1;
+                if (nameA > nameB) return 1;
+                return 0;
+            });
+            
             // Datos
-            models.forEach(model => {
+            sortedModels.forEach(model => {
                 sizes.forEach(size => {
                     if (counters[model.name][size] > 0) {
                         data.push([model.name, size, counters[model.name][size]]);
