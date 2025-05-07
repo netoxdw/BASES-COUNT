@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,20 +10,25 @@
         .model-section {
             margin-bottom: 2rem;
         }
+
         .model-card {
             margin-bottom: 1rem;
             border-radius: 0.5rem;
             overflow: hidden;
         }
+
         .basico .card-header {
             background-color: #e6f7ff;
         }
+
         .intermedio .card-header {
             background-color: #fff7e6;
         }
+
         .avanzado .card-header {
             background-color: #f0ffe6;
         }
+
         .tag-label {
             font-weight: bold;
             padding: 0.3rem 0.8rem;
@@ -30,81 +36,99 @@
             font-size: 0.8rem;
             margin-left: 1rem;
         }
+
         .tag-basico {
             background-color: #b3e0ff;
             color: #004080;
         }
+
         .tag-intermedio {
             background-color: #ffd699;
             color: #804000;
         }
+
         .tag-avanzado {
             background-color: #99ff99;
             color: #006600;
         }
+
         .model-table {
             width: 100%;
             border-collapse: collapse;
         }
+
         .model-table th {
             text-align: center;
             padding: 0.75rem 0.5rem;
             background-color: #f8f9fa;
             border-bottom: 2px solid #dee2e6;
         }
+
         .model-table td {
             padding: 0.75rem 0.5rem;
             text-align: center;
             border-bottom: 1px solid #eee;
         }
+
         .model-name {
             font-weight: 500;
             text-align: left;
             white-space: nowrap;
             padding-left: 1rem !important;
         }
+
         .counter-container {
             display: flex;
             align-items: center;
             justify-content: center;
         }
+
         .counter-value {
             margin: 0 0.5rem;
             min-width: 30px;
             text-align: center;
         }
+
         h2 {
             border-bottom: 2px solid #dee2e6;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
         }
+
         .basico tr:nth-child(4n+1) {
             background-color: #e6f7ff;
         }
+
         .basico tr:nth-child(4n+3) {
             background-color: #d0ebff;
         }
+
         .intermedio tr:nth-child(4n+1) {
             background-color: #fff7e6;
         }
+
         .intermedio tr:nth-child(4n+3) {
             background-color: #ffefcc;
         }
+
         .avanzado tr:nth-child(4n+1) {
             background-color: #f0ffe6;
         }
+
         .avanzado tr:nth-child(4n+3) {
             background-color: #e0ffcc;
         }
+
         tr:hover {
             background-color: #f1f1f1 !important;
         }
     </style>
 </head>
+
 <body>
     <div class="container py-4">
         <h1 class="text-center mb-4">Contador de Bases</h1>
-        
+
         <div class="row mb-4">
             <div class="col-md-6 mx-auto">
                 <div class="form-floating">
@@ -113,7 +137,32 @@
                 </div>
             </div>
         </div>
-        
+
+
+        <!-- Sección COLEGIAL (Nueva) -->
+        <div class="model-section colegial">
+            <h2>COLEGIAL <span class="tag-label tag-colegial">COLEGIAL</span></h2>
+            <div class="card model-card">
+                <div class="card-body p-0">
+                    <table class="model-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 25%">Modelo</th>
+                                <th>Panoramic</th>
+                                <th>Carta</th>
+                                <th>Ampliación</th>
+                                <th>Doble carta</th>
+                            </tr>
+                        </thead>
+                        <tbody id="colegial-container">
+                            <!-- Las filas se generarán con JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Sección BÁSICO -->
         <div class="model-section basico">
             <h2>BÁSICO <span class="tag-label tag-basico">BASICO</span></h2>
@@ -136,7 +185,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Sección INTERMEDIO -->
         <div class="model-section intermedio">
             <h2>INTERMEDIO <span class="tag-label tag-intermedio">INTERMEDIO</span></h2>
@@ -159,7 +208,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Sección AVANZADO -->
         <div class="model-section avanzado">
             <h2>AVANZADO <span class="tag-label tag-avanzado">AVANZADO</span></h2>
@@ -182,7 +231,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Tabla de resultados -->
         <div class="mt-5">
             <h2 class="mb-3">Resumen de Pedido</h2>
@@ -201,7 +250,7 @@
                 </table>
             </div>
         </div>
-        
+
         <!-- Botones de acción -->
         <div class="d-flex justify-content-center gap-3 my-4">
             <button class="btn btn-primary" id="copyBtn">Copiar Resumen</button>
@@ -215,6 +264,8 @@
     <script>
         // Datos de los modelos
         const models = [
+            { name: "RESINA", tag: "COLEGIAL" },  // Nuevo modelo
+            { name: "CRISTAL CHICO", tag: "COLEGIAL" },  // Nuevo modelo
             { name: "ACANALADA PIRAMIDAL NEGRO", tag: "BASICO" },
             { name: "ACANALADA PIRAMIDAL VINO", tag: "BASICO" },
             { name: "ACANALADA PIRAMIDAL CAFÉ", tag: "BASICO" },
@@ -238,6 +289,7 @@
             { name: "ROMANA", tag: "INTERMEDIO" },
             { name: "ATENEA", tag: "INTERMEDIO" },
             { name: "TUB D LUX", tag: "INTERMEDIO" },
+            { name: "CRISTAL GRANDE", tag: "INTERMEDIO" },
             { name: "ANUBIS CHOCOLATE", tag: "AVANZADO" },
             { name: "ANUBIS MIEL", tag: "AVANZADO" },
             { name: "ESLOVENIA", tag: "AVANZADO" },
@@ -278,48 +330,48 @@
         // Generar filas de modelos en formato tabular
         function generateModelRows() {
             sortModelsAlphabetically(); // Ordenar antes de generar las filas
-            
+
             models.forEach(model => {
                 const containerId = `${model.tag.toLowerCase()}-container`;
                 const container = document.getElementById(containerId);
-                
+
                 const row = document.createElement('tr');
-                
+
                 // Celda de modelo
                 const modelCell = document.createElement('td');
                 modelCell.className = 'model-name';
                 modelCell.textContent = model.name;
                 row.appendChild(modelCell);
-                
+
                 // Celdas para cada tamaño
                 sizes.forEach(size => {
                     const sizeCell = document.createElement('td');
-                    
+
                     const counterDiv = document.createElement('div');
                     counterDiv.className = 'counter-container';
-                    
+
                     const minusBtn = document.createElement('button');
                     minusBtn.className = 'btn btn-sm btn-outline-danger';
                     minusBtn.textContent = '-';
                     minusBtn.onclick = () => updateCounter(model.name, size, -1);
-                    
+
                     const counterSpan = document.createElement('span');
                     counterSpan.className = 'counter-value';
                     counterSpan.id = `counter-${model.name.replace(/\s+/g, '-')}-${size}`;
                     counterSpan.textContent = '0';
-                    
+
                     const plusBtn = document.createElement('button');
                     plusBtn.className = 'btn btn-sm btn-outline-success';
                     plusBtn.textContent = '+';
                     plusBtn.onclick = () => updateCounter(model.name, size, 1);
-                    
+
                     counterDiv.appendChild(minusBtn);
                     counterDiv.appendChild(counterSpan);
                     counterDiv.appendChild(plusBtn);
                     sizeCell.appendChild(counterDiv);
                     row.appendChild(sizeCell);
                 });
-                
+
                 container.appendChild(row);
             });
         }
@@ -328,10 +380,10 @@
         function updateCounter(model, size, change) {
             counters[model][size] += change;
             if (counters[model][size] < 0) counters[model][size] = 0;
-            
+
             const counterId = `counter-${model.replace(/\s+/g, '-')}-${size}`;
             document.getElementById(counterId).textContent = counters[model][size];
-            
+
             updateResultsTable();
         }
 
@@ -339,9 +391,9 @@
         function updateResultsTable() {
             const tbody = document.querySelector('#resultsTable tbody');
             tbody.innerHTML = '';
-            
+
             let hasItems = false;
-            
+
             // Ordenar alfabéticamente para la tabla de resultados
             const sortedModels = [...models].sort((a, b) => {
                 const nameA = a.name.toUpperCase();
@@ -350,22 +402,22 @@
                 if (nameA > nameB) return 1;
                 return 0;
             });
-            
+
             sortedModels.forEach(model => {
                 sizes.forEach(size => {
                     if (counters[model.name][size] > 0) {
                         hasItems = true;
                         const row = document.createElement('tr');
-                        
+
                         const modelCell = document.createElement('td');
                         modelCell.textContent = model.name;
-                        
+
                         const sizeCell = document.createElement('td');
                         sizeCell.textContent = size;
-                        
+
                         const qtyCell = document.createElement('td');
                         qtyCell.textContent = counters[model.name][size];
-                        
+
                         row.appendChild(modelCell);
                         row.appendChild(sizeCell);
                         row.appendChild(qtyCell);
@@ -373,7 +425,7 @@
                     }
                 });
             });
-            
+
             if (!hasItems) {
                 const row = document.createElement('tr');
                 const cell = document.createElement('td');
@@ -389,9 +441,9 @@
         function copyToClipboard() {
             const schoolName = document.getElementById('schoolName').value;
             let summaryText = schoolName ? `Escuela: ${schoolName}\n\n` : '';
-            
+
             let hasItems = false;
-            
+
             // Ordenar alfabéticamente para el resumen
             const sortedModels = [...models].sort((a, b) => {
                 const nameA = a.name.toUpperCase();
@@ -400,7 +452,7 @@
                 if (nameA > nameB) return 1;
                 return 0;
             });
-            
+
             sortedModels.forEach(model => {
                 sizes.forEach(size => {
                     if (counters[model.name][size] > 0) {
@@ -409,11 +461,11 @@
                     }
                 });
             });
-            
+
             if (!hasItems) {
                 summaryText += 'No hay elementos seleccionados';
             }
-            
+
             navigator.clipboard.writeText(summaryText).then(() => {
                 alert('Resumen copiado al portapapeles');
             }).catch(err => {
@@ -433,12 +485,12 @@
         function exportToExcel() {
             const schoolName = document.getElementById('schoolName').value;
             const data = [];
-            
+
             // Encabezados
             data.push(['Escuela:', schoolName || '']);
             data.push([]);
             data.push(['Modelo', 'Tamaño', 'Cantidad']);
-            
+
             // Ordenar alfabéticamente para el Excel
             const sortedModels = [...models].sort((a, b) => {
                 const nameA = a.name.toUpperCase();
@@ -447,7 +499,7 @@
                 if (nameA > nameB) return 1;
                 return 0;
             });
-            
+
             // Datos
             sortedModels.forEach(model => {
                 sizes.forEach(size => {
@@ -456,12 +508,12 @@
                     }
                 });
             });
-            
+
             // Crear libro de Excel
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.aoa_to_sheet(data);
             XLSX.utils.book_append_sheet(wb, ws, "Pedido de Bases");
-            
+
             // Descargar archivo
             const fileName = `Pedido_Bases_${schoolName || new Date().toISOString().slice(0, 10)}.xlsx`;
             XLSX.writeFile(wb, fileName);
@@ -471,7 +523,7 @@
         function resetCounters() {
             if (confirm('¿Estás seguro de que quieres reiniciar todos los contadores?')) {
                 initializeCounters();
-                
+
                 models.forEach(model => {
                     sizes.forEach(size => {
                         const counterId = `counter-${model.name.replace(/\s+/g, '-')}-${size}`;
@@ -481,7 +533,7 @@
                         }
                     });
                 });
-                
+
                 updateResultsTable();
             }
         }
@@ -491,7 +543,7 @@
             initializeCounters();
             generateModelRows();
             updateResultsTable();
-            
+
             // Event listeners para los botones de acción
             document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
             document.getElementById('exportBtn').addEventListener('click', exportToExcel);
@@ -499,4 +551,5 @@
         });
     </script>
 </body>
+
 </html>
